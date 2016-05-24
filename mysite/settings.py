@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'practice.apps.PracticeConfig',
     'login.apps.LoginConfig',
+    'questionaire.apps.QuestionaireConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

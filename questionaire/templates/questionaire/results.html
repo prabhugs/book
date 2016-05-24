@@ -1,3 +1,6 @@
+{% extends "dashboard/base.html" %}
+
+{% block body_block %}
 <h1>{{question.question_text}}</h1>
 
 <ul>
@@ -7,3 +10,4 @@
 </ul>
 
 <a href="{% url 'questionaire:detail' question.id %}">Vote again ?</a>
+{% endblock %}

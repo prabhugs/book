@@ -21,6 +21,7 @@ from . import views
 
 urlpatterns = [
     url(r'^practice/', include('practice.urls')),
+    url(r'^questionaire/', include('questionaire.urls')),
     #url(r'^', views.index, name='index'),
     url(r'^', include('dashboard.urls')),
     #url(r'^', 'django.contrib.auth.views.login'),
