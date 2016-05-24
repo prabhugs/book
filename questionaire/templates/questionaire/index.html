@@ -1,0 +1,15 @@
+{% extends "dashboard/base.html" %}
+{% block body_block %}
+		<div class="jumbotron">
+			<h2> Questions </h2>
+			{% if latest_question_list %}
+				<div class="list-group">
+					{% for question in latest_question_list %}
+					<a href="{% url 'polls:detail' question.id %}" class="list-group-item">{{ question.question_text }}</a>
+					{% endfor %}
+				</div>
+			{% else %}
+				<p>No polls are available.</p>
+			{% endif %}
+		</div>
+{% endblock %}
