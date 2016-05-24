@@ -1,0 +1,11 @@
+{% extends "dashboard/base.html" %}
+{% block title %}User Registration{% endblock %}
+{% block body_block %}
+    <form method="post" action=".">{% csrf_token %}
+        <table border="0">
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Register" />
+    </form>
+    <a href="/user/login">Login</a>
+{% endblock %}
