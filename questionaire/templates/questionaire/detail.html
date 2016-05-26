@@ -21,19 +21,20 @@
 		{% for choice in question.choice_set.all %}
 		<!-- <div class="col-sm-2"> -->
 			<!-- <label for="choice{{forloop.counter}}">{{choice.choice_text}}</lable><br/> -->
-			<option data-img-label="test" data-img-src="/media/{{choice.docfile}}" value="{{choice.choice_text}}">{{choice.choice_text}}</option>
+			<option data-img-label="{{choice.choice_text}}" data-img-src="/media/{{choice.docfile}}" value="{{choice.choice_text}}">{{choice.choice_text}}</option>
 		<!-- </div> -->
 		{% endfor %}
 	</select>
   </div>
 </div>
 
+Actual answer :
 <div id="selected-answer">
 </div>
 
 {% for choice in question.choice_set.all %}
 	{% if choice.is_answer %}
-		<h3>{{choice.choice_text}}</h3>
+		Expected Answer : <h4>{{choice.choice_text}}</h4>
 	{% endif %}
 {% endfor %}
 <!-- <img src="/media/Work_Flow.png" class="img-rounded" alt="Cinque Terre" width="304" height="236"> -->
@@ -73,4 +74,10 @@ $("#selected-answer").html($("#ans option:selected").text());
 </script>
 </form>
 
+{% endblock %}
+
+{% block audio_block %}
+<audio id="Player" autoplay>
+        <source src="/media/{{question.id}}.mp3"/>
+</audio>
 {% endblock %}

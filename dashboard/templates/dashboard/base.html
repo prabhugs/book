@@ -16,6 +16,11 @@
   </head>
 <body>
   
+	{% block audio_block %}
+        <audio id="Player" autoplay>
+                <source src="media/1.mp3"/>
+        </audio>
+        {% endblock %}
 
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
