@@ -1,23 +1,76 @@
 {% extends "dashboard/base.html" %}
 
 {% block body_block %}
-<h1> {{question.question_text}} </h1>
+<h3> {{question.id}}. {{question.question_text}} </h3>
 
 {% if error_message %}
-    <p><strong>{{error_message}}</strong></p>
+	<div class="alert alert-danger">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	<strong>{{error_message}}</strong>
+	</div>
 {% endif %}
 
 <form action="{% url 'questionaire:vote' question.id %}" method="post">
     {% csrf_token %}
-<ul>
+	<!--<li> -->
+	<!-- <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}"/> -->
+ <div class="container-fluid">
+  <div class="row">
+	<select id='ans' class="image-picker show-html show-labels">
+		<option value=""></option>
+		{% for choice in question.choice_set.all %}
+		<!-- <div class="col-sm-2"> -->
+			<!-- <label for="choice{{forloop.counter}}">{{choice.choice_text}}</lable><br/> -->
+			<option data-img-label="test" data-img-src="/media/{{choice.docfile}}" value="{{choice.choice_text}}">{{choice.choice_text}}</option>
+		<!-- </div> -->
+		{% endfor %}
+	</select>
+  </div>
+</div>
+
+<div id="selected-answer">
+</div>
+
+{% for choice in question.choice_set.all %}
+	{% if choice.is_answer %}
+		<h3>{{choice.choice_text}}</h3>
+	{% endif %}
+{% endfor %}
+<!-- <img src="/media/Work_Flow.png" class="img-rounded" alt="Cinque Terre" width="304" height="236"> -->
+	<!--</li> -->
+
+<!--
+<select class="image-picker">
+<option value=""></option>
     {% for choice in question.choice_set.all %}
-	<li>
-	<input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}"/>
-	<label for="choice{{forloop.counter}}">{{choice.choice_text}}</lable><br/>
-	</li>
+	<option data-img-src="/media/{{choice.docfile}}" class="img-rounded" alt="Cinque Terre" width="180" height="236" value="{{choice.choice_text}}">{{choice.choice_text}}</option>
     {% endfor %}
-</ul>
-    <input type="submit" value="Vote"/>
+ <img src="/media/{{question.docfile2}}" class="img-rounded" alt="Cinque Terre" width="180" height="236">
+ <img src="/media/{{question.docfile3}}" class="img-rounded" alt="Cinque Terre" width="180" height="236">
+ <img src="/media/{{question.docfile4}}" class="img-rounded" alt="Cinque Terre" width="180" height="236">
+</select>
+-->
+
+    <input class="btn btn-success" type="submit" value="Answer the question"/>
+<script>
+	$("select").imagepicker(
+{show_label:true});
+
+$(function(){
+
+var act_answer = 
+$( "#ans" ).change(function() {
+//  alert($("#ans option:selected").text());
+$("#selected-answer").html($("#ans option:selected").text());
+});
+
+
+});
+
+
+
+
+</script>
 </form>
 
 {% endblock %}

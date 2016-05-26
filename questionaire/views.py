@@ -41,3 +41,30 @@ def vote(request, question_id):
 	selected_choice.save()
 	return HttpResponseRedirect(reverse('questionaire:results', args=(question_id,)))
 
+#from django.shortcuts import render_to_response
+#from django.template import RequestContext
+
+#from .forms import UploadFileForm 
+
+#def list(request):
+#    # Handle file upload
+#    if request.method == 'POST':
+#        form = UploadFileForm(request.POST, request.FILES)
+#        if form.is_valid():
+#            newdoc = Question(docfile = request.FILES['docfile'])
+#            newdoc.save()
+
+            # Redirect to the document list after POST
+#            return HttpResponseRedirect(reverse('questionaire.views.list'))
+#    else:
+#        form = UploadFileForm() # A empty, unbound form
+
+    # Load documents for the list page
+#    documents = Question.objects.all()
+
+    # Render list page with the documents and the form
+#    return render_to_response(
+#        'questionaire/list.html',
+#        {'documents': documents, 'form': form},
+#        context_instance=RequestContext(request)
+#    )
