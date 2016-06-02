@@ -9,6 +9,11 @@ class Level(models.Model):
     def __str__(self):
         return self.level_text
 
+class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    current_level = models.ForeignKey(Level)
+    last_visited = models.DateTimeField("last visited")
+
 # Create your models here.
 class Question(models.Model):
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
@@ -38,6 +43,6 @@ class Choice(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Choice, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(Student, on_delete=models.CASCADE)
     answered_on = models.DateTimeField("answered on")
     attempt = models.IntegerField(default=0)
