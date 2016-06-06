@@ -2,6 +2,25 @@
 {% block body_block %}
 		<div class="well">
 			<h3> Welcome, {{user.username}} !!</h3>
-			Work under progress...
+		</div>
+		<div class="panel panel-info">
+			<div class="panel-heading">
+			<h5>Dashboard</h5>
+			</div>
+			<div class="panel-body">
+				<table class="table table-hover table-condensed">
+					<tbody>
+						<tr>
+							<td><h5>Name </td> <td>{{student.user.username}}</h5></td>
+						</tr>
+						<tr>
+							<td><h5>Current Level </td><td> {{student.current_level}}</h5></td>
+						</tr>
+						<tr>
+							<td><h5>Current Level </td><td> {{student.current_level}}</h5></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 {% endblock %}

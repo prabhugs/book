@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from .models import Question, Choice
+from .models import Question, Choice, Student
 
 
 # Create your views here.
@@ -12,6 +12,10 @@ def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
     template = loader.get_template("questionaire/index.html")
     context = {'latest_question_list': latest_question_list, }
+
+    this_student = get_object_or_404(Student, pk=request.user.id)
+
+    print request.user.id, request.user, this_student.current_level
     #output = ','.join([q.question_text for q in latest_question_list])
     return HttpResponse(template.render(context, request))
 

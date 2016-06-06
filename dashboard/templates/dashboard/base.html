@@ -18,7 +18,7 @@
   
 	{% block audio_block %}
         <audio id="Player" autoplay>
-                <source src="media/1.mp3"/>
+                <source src="/media/1.mp3"/>
         </audio>
         {% endblock %}
 
@@ -47,7 +47,6 @@
 	<div class="container-fluid text-center">    
 		<div class="row content">
 			<div class="col-sm-2 sidenav">
-				<!--
 				{% block left_body_block %}
 				<div class="container-fluid">
 					<h4>Challenge</h4>
@@ -87,7 +86,6 @@
 					</div>
 				</div>
 				{% endblock %}
-				-->
 			</div>
 			<div class="col-sm-8 text-left"> 
 				<div class="container-fluid">
@@ -96,12 +94,14 @@
 				</div>
 			</div>
 			<div class="col-sm-2 sidenav">
+				{% block right_body_block %}
 				<div class="well">
 					<p>ADS</p>
 				</div>
 				<div class="well">
 					<p>ADS</p>
 				</div>
+				{% endblock %}
 			</div>
 		</div>
 	</div>

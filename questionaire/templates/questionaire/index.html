@@ -52,4 +52,17 @@
                                                 </div>
                                           </div>
                                   </div>
-                                        {% endblock %}
+{% endblock %}
+
+{% block right_body_block %}
+	<h4> Most recent questions </h4>
+	{% if latest_question_list %}
+		<div class="list-group">
+			{% for question in latest_question_list %}
+				<a href="{% url 'questionaire:detail' question.id %}" class="list-group-item">{{ question.question_text }}</a>
+			{% endfor %}
+		</div>
+	{% else %}
+		<p>No polls are available.</p>
+	{% endif %}
+{% endblock %}

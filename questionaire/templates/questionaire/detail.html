@@ -37,33 +37,21 @@ Actual answer :
 		Expected Answer : <h4>{{choice.choice_text}}</h4>
 	{% endif %}
 {% endfor %}
-<!-- <img src="/media/Work_Flow.png" class="img-rounded" alt="Cinque Terre" width="304" height="236"> -->
-	<!--</li> -->
-
-<!--
-<select class="image-picker">
-<option value=""></option>
-    {% for choice in question.choice_set.all %}
-	<option data-img-src="/media/{{choice.docfile}}" class="img-rounded" alt="Cinque Terre" width="180" height="236" value="{{choice.choice_text}}">{{choice.choice_text}}</option>
-    {% endfor %}
- <img src="/media/{{question.docfile2}}" class="img-rounded" alt="Cinque Terre" width="180" height="236">
- <img src="/media/{{question.docfile3}}" class="img-rounded" alt="Cinque Terre" width="180" height="236">
- <img src="/media/{{question.docfile4}}" class="img-rounded" alt="Cinque Terre" width="180" height="236">
-</select>
--->
 
     <input class="btn btn-success" type="submit" value="Answer the question"/>
+
+
+
 <script>
 	$("select").imagepicker(
 {show_label:true});
 
 $(function(){
 
-var act_answer = 
-$( "#ans" ).change(function() {
-//  alert($("#ans option:selected").text());
-$("#selected-answer").html($("#ans option:selected").text());
-});
+	var act_answer = $( "#ans" ).change(function() {
+		//  alert($("#ans option:selected").text());
+		$("#selected-answer").html($("#ans option:selected").text());
+	});
 
 
 });

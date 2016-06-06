@@ -12,15 +12,19 @@ class Level(models.Model):
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     current_level = models.ForeignKey(Level)
+    #completed_levels = models.ManyToManyField(Level)
     last_visited = models.DateTimeField("last visited")
+
+class Progress(models.Model):
+    author = models.ForeignKey(Student, on_delete=models.CASCADE)
+    level = models.ForeignKey(Level)
+    completed = models.BooleanField(default=False)
+    score = models.IntegerField(default=0)
 
 # Create your models here.
 class Question(models.Model):
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
-    question_text = models.CharField(max_length = 20)
-    #docfile1 = models.FileField(upload_to='images')
-    #docfile2 = models.FileField(upload_to='images')
-    #docfile3 = models.FileField(upload_to='images')
+    question_text = models.CharField(max_length = 100)
     #docfile4 = models.FileField(upload_to='images')
     pub_date = models.DateTimeField("published date")
 
@@ -45,4 +49,5 @@ class Answer(models.Model):
     answer = models.ForeignKey(Choice, on_delete=models.CASCADE)
     author = models.ForeignKey(Student, on_delete=models.CASCADE)
     answered_on = models.DateTimeField("answered on")
-    attempt = models.IntegerField(default=0)
+    #attempt = models.IntegerField(default=0)
+    score = models.IntegerField(default=0)
