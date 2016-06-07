@@ -10,13 +10,16 @@ from .models import Question, Choice, Student
 @login_required
 def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    template = loader.get_template("questionaire/index.html")
-    context = {'latest_question_list': latest_question_list, }
-
     this_student = get_object_or_404(Student, pk=request.user.id)
+    my_question_list = Question.objects.filter(level=this_student.current_level_id)
 
-    print request.user.id, request.user, this_student.current_level
-    #output = ','.join([q.question_text for q in latest_question_list])
+
+    print request.user.id, request.user, this_student.current_level_id, this_student.current_level
+
+    template = loader.get_template("questionaire/index.html")
+    context = {'latest_question_list': latest_question_list,
+               'my_question_list' : my_question_list,}
+
     return HttpResponse(template.render(context, request))
 
 def detail(request, question_id):
