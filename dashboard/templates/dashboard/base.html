@@ -46,6 +46,7 @@
 
 	<div class="container-fluid text-center">    
 		<div class="row content">
+			{% block outer_left_body_block %}
 			<div class="col-sm-2 sidenav">
 				{% block left_body_block %}
 				<div class="container-fluid">
@@ -87,6 +88,7 @@
 				</div>
 				{% endblock %}
 			</div>
+			{% endblock %}
 			<div class="col-sm-8 text-left"> 
 				<div class="container-fluid">
 					{% block body_block %}

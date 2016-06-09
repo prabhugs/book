@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, Choice, Level, Student
+from .models import Question, Choice, Level, Student, Exam 
 from django.db import models
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -28,5 +28,6 @@ class StudentAdmin(UserAdmin):
 admin.site.register(Level)
 admin.site.register(Question)
 admin.site.register(Choice)
+admin.site.register(Exam)
 admin.site.unregister(User)
 admin.site.register(User, StudentAdmin)

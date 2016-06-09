@@ -5,7 +5,7 @@ from questionaire.models import Student, Question
 # Create your views here.
 def index(request):
     if request.user.id:
-        this_student = get_object_or_404(Student, pk=request.user.id)
+        this_student = get_object_or_404(Student, user_id=request.user.id)
         return render(request, 'dashboard/index.html', {'student' : this_student})
     else:
         return render(request, 'dashboard/index.html')

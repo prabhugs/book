@@ -15,6 +15,9 @@ class Student(models.Model):
     #completed_levels = models.ManyToManyField(Level)
     last_visited = models.DateTimeField("last visited")
 
+    def __str__(self):
+        return self.user.username
+
 class Progress(models.Model):
     author = models.ForeignKey(Student, on_delete=models.CASCADE)
     level = models.ForeignKey(Level)
@@ -51,3 +54,33 @@ class Answer(models.Model):
     answered_on = models.DateTimeField("answered on")
     #attempt = models.IntegerField(default=0)
     score = models.IntegerField(default=0)
+
+class Exam(models.Model):
+    level = models.ForeignKey(Level, on_delete=models.CASCADE)
+    test_text = models.CharField(max_length=100)
+    question = models.ManyToManyField(Question)
+    total_score = models.IntegerField(default=30)
+    student_score = models.IntegerField(default=0)
+    assigned_to = models.ForeignKey(Student, on_delete=models.CASCADE)
+
+    OPEN = 'O'
+    STARTED = 'S'
+    COMPLETED = 'C'
+    INPROGRESS = 'P'
+    status_choice = ((OPEN, "Open"), (STARTED, "Started"), (INPROGRESS, "In Progress"), (COMPLETED, "Completed"),)
+
+    status = models.CharField(max_length = 1, choices=status_choice, default=OPEN)
+
+    def __str__(self):
+        return self.test_text
+
+    def is_open(self):
+        return self.status == self.OPEN
+
+    def is_started(self):
+        return self.status == self.STARTED
+
+    def is_complete(self):
+        return self.status == self.COMPLETED
+
+

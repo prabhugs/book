@@ -1,5 +1,8 @@
 {% extends "dashboard/base.html" %}
 
+{% block left_body_block %}
+{% endblock %}
+
 {% block body_block %}
 <h3> {{question.id}}. {{question.question_text}} </h3>
 
@@ -62,6 +65,9 @@ $(function(){
 </script>
 </form>
 
+{% endblock %}
+
+{% block right_body_block %}
 {% endblock %}
 
 {% block audio_block %}

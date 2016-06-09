@@ -1,28 +1,19 @@
 {% extends "dashboard/base.html" %}
 {% block body_block %}
 		<div class="jumbotron">
-			<h4> You are at level : {{student.current_level}}</h4>
-			{% if test_list %}
-				<div class="list-group">
-					{% for test in test_list %}
-					<a href="{% url 'questionaire:test' test.id %}" class="list-group-item">{{test.id}}. {{ test.test_text }}</a>
-					{% endfor %}
-				</div>
-			{% else %}
-				<p>No tests are available.</p>
-			{% endif %}
+			<h4> Test code: {{test.level}}T{{test.id}} <a class="small"> {{test.test_text}} </a></h4>
 
-			<!-- 
-			{% if latest_question_list %}
-				<div class="list-group">
-					{% for question in my_question_list %}
-					<a href="{% url 'questionaire:detail' question.id %}" class="list-group-item">{{ question.question_text }}</a>
-					{% endfor %}
-				</div>
-			{% else %}
-				<p>No polls are available.</p>
-			{% endif %}
-			-->
+
+			{% if test.question.all %}
+                                <div class="list-group">
+                                        {% for question in test.question.all %}
+                                        <a href="{% url 'questionaire:detail' question.id %}" class="list-group-item">{{ question.question_text }}</a>
+                                        {% endfor %}
+                                </div>
+                        {% else %}
+                                <p>No polls are available.</p>
+                        {% endif %}
+
 		</div>
 {% endblock %}
 
