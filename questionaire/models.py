@@ -30,6 +30,7 @@ class Question(models.Model):
     question_text = models.CharField(max_length = 100)
     #docfile4 = models.FileField(upload_to='images')
     pub_date = models.DateTimeField("published date")
+    score = models.IntegerField(default=1)
 
     def __str__(self):
         return self.question_text
@@ -80,8 +81,8 @@ class Answer(models.Model):
     test = models.ForeignKey(Exam, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Choice, on_delete=models.CASCADE)
-    author = models.ForeignKey(Student, on_delete=models.CASCADE)
-    answered_on = models.DateTimeField("answered on")
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     #attempt = models.IntegerField(default=0)
     score = models.IntegerField(default=0)
+    answered_on = models.DateTimeField("answered on", auto_now=True)
 
