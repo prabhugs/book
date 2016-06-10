@@ -47,14 +47,6 @@ class Choice(models.Model):
     def __str__(self):
         return self.choice_text
 
-class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer = models.ForeignKey(Choice, on_delete=models.CASCADE)
-    author = models.ForeignKey(Student, on_delete=models.CASCADE)
-    answered_on = models.DateTimeField("answered on")
-    #attempt = models.IntegerField(default=0)
-    score = models.IntegerField(default=0)
-
 class Exam(models.Model):
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
     test_text = models.CharField(max_length=100)
@@ -83,4 +75,13 @@ class Exam(models.Model):
     def is_complete(self):
         return self.status == self.COMPLETED
 
+
+class Answer(models.Model):
+    test = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Choice, on_delete=models.CASCADE)
+    author = models.ForeignKey(Student, on_delete=models.CASCADE)
+    answered_on = models.DateTimeField("answered on")
+    #attempt = models.IntegerField(default=0)
+    score = models.IntegerField(default=0)
 

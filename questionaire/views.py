@@ -47,15 +47,33 @@ def results(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'questionaire/results.html', {'question': question})
 
-def vote(request, question_id):
+def answer(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
+    selected_choice = None
+    #print request.POST.get('choice', False)
     try:
-	selected_choice = question.choice_set.get(pk=request.POST['choice'])
+	#selected_choice = question.choice_set.get(pk=request.POST['choice'])
+	selected_choice = request.POST.get('choice', False)
+        ##
+        # TODO: Handle if choice not found
+        ##
+        selected_choice = Choice.objects.get(pk=selected_choice)
+        #c = Choice.objects.get(pk=selected_choice)
+        #print c.is_answer
     except (KeyError, Choice.DoesNotExist):
 	return render(request, 'questionaire/detail.html', {'question': question, 'error_message': "Please select an answer"})
     else:
-	selected_choice.votes += 1
-	selected_choice.save()
+        this_student = get_object_or_404(Student, user_id=request.user.id)
+        this_test = Exam.objects.filter(assigned_to=this_student.id, status='O')[0]
+        print this_student, question, selected_choice, this_test.student_score, this_test.total_score
+        if selected_choice.is_answer:
+            this_test.student_score += 1
+            this_test.save()
+	#selected_choice.votes += 1
+        #print selected_choice
+	#selected_choice.votes += 1
+	#selected_choice.save()
+	return HttpResponseRedirect(reverse('questionaire:detail', args=(question_id,)))
 	return HttpResponseRedirect(reverse('questionaire:results', args=(question_id,)))
 
 #from django.shortcuts import render_to_response

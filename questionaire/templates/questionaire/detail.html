@@ -13,18 +13,18 @@
 	</div>
 {% endif %}
 
-<form action="{% url 'questionaire:vote' question.id %}" method="post">
+<form action="{% url 'questionaire:answer' question.id %}" method="post">
     {% csrf_token %}
 	<!--<li> -->
 	<!-- <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}"/> -->
  <div class="container-fluid">
   <div class="row">
-	<select id='ans' class="image-picker show-html show-labels">
+	<select id='ans' name="choice" class="image-picker show-html show-labels">
 		<option value=""></option>
 		{% for choice in question.choice_set.all %}
 		<!-- <div class="col-sm-2"> -->
 			<!-- <label for="choice{{forloop.counter}}">{{choice.choice_text}}</lable><br/> -->
-			<option data-img-label="{{choice.choice_text}}" data-img-src="/media/{{choice.docfile}}" value="{{choice.choice_text}}">{{choice.choice_text}}</option>
+			<option data-img-label="{{choice.choice_text}}" data-img-src="/media/{{choice.docfile}}" value="{{choice.id}}">{{choice.choice_text}}</option>
 		<!-- </div> -->
 		{% endfor %}
 	</select>
@@ -63,6 +63,9 @@ $(function(){
 
 
 </script>
+
+	<input type="hidden" name="exam" value="{{question}}">
+
 </form>
 
 {% endblock %}
