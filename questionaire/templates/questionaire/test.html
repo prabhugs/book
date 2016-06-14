@@ -1,13 +1,17 @@
 {% extends "dashboard/base.html" %}
 {% block body_block %}
 		<div class="jumbotron">
-			<h4> Test code: {{test.level}}T{{test.id}} <a class="small"> {{test.test_text}} </a></h4>
+			<h4> Test code: {{test.level}}T{{test.id}} <a class="small"> {{test.test_text}} </a> <a>Score : {{score}}</a></h4>
 
 
 			{% if test.question.all %}
                                 <div class="list-group">
                                         {% for question in test.question.all %}
+					{% if question.id in answered %}
+                                        <a href="{% url 'questionaire:detail' question.id %}" class="list-group-item list-group-item-success disabled">{{ question.question_text }}</a>
+                        		{% else %}
                                         <a href="{% url 'questionaire:detail' question.id %}" class="list-group-item">{{ question.question_text }}</a>
+                        		{% endif %}
                                         {% endfor %}
                                 </div>
                         {% else %}

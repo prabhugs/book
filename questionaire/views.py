@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from .models import Question, Choice, Student, Exam, Answer
 
+from django.db.models import Sum
 
 # Create your views here.
 @login_required
@@ -39,7 +40,15 @@ def test(request, test_id):
     test = get_object_or_404(Exam, pk=test_id)
     print test.id, test, test.question.all()
     this_student = get_object_or_404(Student, user_id=request.user.id)
-    return render(request, 'questionaire/test.html', {'test': test, 'student' : this_student})
+    this_student_score = Answer.objects.filter(student_id=this_student, test_id=test_id).aggregate(Sum('score'))['score__sum']
+
+    answered_correctly_list = Answer.objects.filter(student_id=this_student, test_id=test_id, score=1)
+
+    answered = []
+    for answer in answered_correctly_list:
+        print answer.question_id
+        answered.append(answer.question_id)
+    return render(request, 'questionaire/test.html', {'test': test, 'student' : this_student, 'score': this_student_score, "answered": answered})
 
 def results(request, question_id):
     #response = "You're looking at the results of question %s."
