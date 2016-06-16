@@ -83,6 +83,6 @@ class Answer(models.Model):
     answer = models.ForeignKey(Choice, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     #attempt = models.IntegerField(default=0)
-    score = models.IntegerField(default=0)
+    score = models.FloatField(default=0)
     answered_on = models.DateTimeField("answered on", auto_now=True)
 

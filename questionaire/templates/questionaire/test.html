@@ -1,23 +1,30 @@
 {% extends "dashboard/base.html" %}
 {% block body_block %}
 		<div class="jumbotron">
-			<h4> Test code: {{test.level}}T{{test.id}} <a class="small"> {{test.test_text}} </a> <a>Score : {{score}}</a></h4>
-
+			<div class="panel panel-success">
+			<div class="panel-heading">
+				<h4> Test code: {{test.level}}T{{test.id}} <a class="small"> {{test.test_text}} </a> <a class="pull-right">Score : {{score}}</a></h4>
+                        </div>
 
 			{% if test.question.all %}
                                 <div class="list-group">
                                         {% for question in test.question.all %}
-					{% if question.id in answered %}
-                                        <a href="{% url 'questionaire:detail' question.id %}" class="list-group-item list-group-item-success disabled">{{ question.question_text }}</a>
-                        		{% else %}
-                                        <a href="{% url 'questionaire:detail' question.id %}" class="list-group-item">{{ question.question_text }}</a>
-                        		{% endif %}
+						{% for q,s in answered.items %}
+							{% if q == question.id %}
+                                        			<a href="{% url 'questionaire:detail' question.id %}" class="list-group-item list-group-item-success disabled">{{ question.question_text }} <span class="badge">{{s}}</span></a>
+                        				{% endif %}
+                                        	{% endfor %}
+
+						{% if question.id not in answered  %}
+                                        		<a href="{% url 'questionaire:detail' question.id %}" class="list-group-item list-group-item">{{ question.question_text }} <span class="badge">0</span></a>
+                        			{% endif %}
                                         {% endfor %}
                                 </div>
                         {% else %}
                                 <p>No polls are available.</p>
                         {% endif %}
 
+			</div>
 		</div>
 {% endblock %}
 

@@ -41,13 +41,14 @@ def test(request, test_id):
     print test.id, test, test.question.all()
     this_student = get_object_or_404(Student, user_id=request.user.id)
     this_student_score = Answer.objects.filter(student_id=this_student, test_id=test_id).aggregate(Sum('score'))['score__sum']
+    if not this_student_score:
+        this_student_score = 0
+    answered_correctly_list = Answer.objects.filter(student_id=this_student, test_id=test_id, score__gt = 0)
 
-    answered_correctly_list = Answer.objects.filter(student_id=this_student, test_id=test_id, score=1)
-
-    answered = []
+    answered = {}
     for answer in answered_correctly_list:
-        print answer.question_id
-        answered.append(answer.question_id)
+        print "Anwered: ", answer.question_id, answer.score
+        answered[answer.question_id] = answer.score
     return render(request, 'questionaire/test.html', {'test': test, 'student' : this_student, 'score': this_student_score, "answered": answered})
 
 def results(request, question_id):
@@ -74,46 +75,27 @@ def answer(request, question_id):
     else:
         this_student = get_object_or_404(Student, user_id=request.user.id)
         this_test = Exam.objects.filter(assigned_to=this_student.id, status='O')[0]
-        print this_student, question, selected_choice, this_test.student_score, this_test.total_score
+        #print this_student, question, selected_choice, this_test.student_score, this_test.total_score
+        #print this_student, question, selected_choice, this_test.student_score, this_test.total_score
         this_score = 0
+
         if selected_choice.is_answer:
-            this_test.student_score += 1
-            this_score += 1
+
+            previous_attempts = Answer.objects.filter(student = this_student, test = this_test, score = 0, question = question).count()
+
+            if previous_attempts > 4:
+                this_score = 0
+            else:
+                this_score = 1 - ((0.25) * previous_attempts)
+
+            this_test.student_score += this_score
             this_test.save()
+
+        #print "Score is :", this_score
 
         ans = Answer(test = this_test, question = question, answer = selected_choice, student = this_student, score = this_score)
         ans.save()
-	#selected_choice.votes += 1
-        #print selected_choice
-	#selected_choice.votes += 1
-	#selected_choice.save()
+
 	return HttpResponseRedirect(reverse('questionaire:detail', args=(question_id,)))
 	return HttpResponseRedirect(reverse('questionaire:results', args=(question_id,)))
 
-#from django.shortcuts import render_to_response
-#from django.template import RequestContext
-
-#from .forms import UploadFileForm 
-
-#def list(request):
-#    # Handle file upload
-#    if request.method == 'POST':
-#        form = UploadFileForm(request.POST, request.FILES)
-#        if form.is_valid():
-#            newdoc = Question(docfile = request.FILES['docfile'])
-#            newdoc.save()
-
-            # Redirect to the document list after POST
-#            return HttpResponseRedirect(reverse('questionaire.views.list'))
-#    else:
-#        form = UploadFileForm() # A empty, unbound form
-
-    # Load documents for the list page
-#    documents = Question.objects.all()
-
-    # Render list page with the documents and the form
-#    return render_to_response(
-#        'questionaire/list.html',
-#        {'documents': documents, 'form': form},
-#        context_instance=RequestContext(request)
-#    )
